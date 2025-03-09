@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HLK Kulübü - Alışveriş</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Alışveriş</h1>
+    <nav>
+      <a href="index.html">Ana Sayfa</a>
+      <a href="blog.html">Blog</a>
+      <a href="shop.html">Alışveriş</a>
+      <a href="contact.html">İletişim</a>
+      <a href="profile.html">Profil</a>
+      <a href="turnuva.html">Turnuva</a>
+    </nav>
+    <div id="shopContent">
+      <h2>Bakiyenizi Kontrol Edin</h2>
+      <input type="text" id="cardNumber" placeholder="16 Haneli Kart Numaranızı Girin" maxlength="16">
+      <button onclick="checkBalance()">Bakiyemi Göster</button>
+      <p id="balanceDisplay"></p>
+
+      <h2>Ürünler</h2>
+      <div class="product">
+        <h3>Çaylak (Rookie Brawler)</h3>
+        <p><strong>Açıklama:</strong> Kulübe yeni katılan üyeler. Görev: Kulübü tanımak ve temel kuralları öğrenmek.</p>
+        <p><strong>Fiyat:</strong> 50 HL</p>
+        <button onclick="buyProduct(50, 'Çaylak (Rookie Brawler)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Aktif Savaşçı (Active Fighter)</h3>
+        <p><strong>Açıklama:</strong> Düzenli olarak etkinliklere katılan ve kulübe katkıda bulunan üyeler. Görev: Takım oyunlarında yer almak ve kulüp etkinliklerine destek olmak.</p>
+        <p><strong>Fiyat:</strong> 100 HL</p>
+        <button onclick="buyProduct(100, 'Aktif Savaşçı (Active Fighter)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Kıdemli Brawler (Veteran Brawler)</h3>
+        <p><strong>Açıklama:</strong> Uzun süredir kulüpte olan ve önemli başarılar elde eden üyeler. Görev: Yeni üyelere rehberlik etmek ve takım liderliği yapmak.</p>
+        <p><strong>Fiyat:</strong> 200 HL</p>
+        <button onclick="buyProduct(200, 'Kıdemli Brawler (Veteran Brawler)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Takım Kaptanı (Team Captain)</h3>
+        <p><strong>Açıklama:</strong> Lider yardımcısı konumunda olan ve takım oyunlarında strateji belirleyen üyeler. Görev: Liderin yokluğunda kulübü yönetmek ve organizasyonları koordine etmek.</p>
+        <p><strong>Fiyat:</strong> 300 HL</p>
+        <button onclick="buyProduct(300, 'Takım Kaptanı (Team Captain)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Efsanevi Lider (Legendary Leader)</h3>
+        <p><strong>Açıklama:</strong> Kulübün başında olan ve tüm kararları veren kişi. Görev: Kulübün genel stratejisini belirlemek ve büyük resmi yönetmek.</p>
+        <p><strong>Fiyat:</strong> 500 HL</p>
+        <button onclick="buyProduct(500, 'Efsanevi Lider (Legendary Leader)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Mitolojik Savaşçı (Mythic Warrior)</h3>
+        <p><strong>Açıklama:</strong> Kulübe büyük katkılar sağlamış ve artık aktif olmayan üyeler. Görev: Danışmanlık yapmak ve kulübün geleceği için fikirler sunmak.</p>
+        <p><strong>Fiyat:</strong> 400 HL</p>
+        <button onclick="buyProduct(400, 'Mitolojik Savaşçı (Mythic Warrior)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Kurucu Brawler (Founder Brawler)</h3>
+        <p><strong>Açıklama:</strong> Kulübün kuruluşunda yer alan ve temellerini atan üyeler. Görev: Kulübün vizyonunu korumak ve yeni liderlere rehberlik etmek.</p>
+        <p><strong>Fiyat:</strong> 600 HL</p>
+        <button onclick="buyProduct(600, 'Kurucu Brawler (Founder Brawler)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Strateji Ustası (Master Strategist)</h3>
+        <p><strong>Açıklama:</strong> Kulüp dışından gelen, deneyimli ve stratejik danışmanlık yapan kişiler. Görev: Takım oyunlarında strateji geliştirmek ve eğitimler vermek.</p>
+        <p><strong>Fiyat:</strong> 700 HL</p>
+        <button onclick="buyProduct(700, 'Strateji Ustası (Master Strategist)')">Satın Al</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Simüle edilmiş bakiye verisi
+    const balanceData = {
+      "1234567812345678": 1000, // Kart numarası ve bakiye
+      "8765432187654321": 500
+    };
+
+    let userBalance = 0;
+    let currentCardNumber = "";
+
+    // Bakiye sorgulama fonksiyonu
+    function checkBalance() {
+      const cardNumber = document.getElementById("cardNumber").value;
+      if (cardNumber.length !== 16 || isNaN(cardNumber)) {
+        alert("Geçersiz kart numarası! Lütfen 16 haneli bir numara girin.");
+        return;
+      }
+
+      if (balanceData[cardNumber] === undefined) {
+        alert("Kart numarası bulunamadı!");
+        return;
+      }
+
+      userBalance = balanceData[cardNumber];
+      currentCardNumber = cardNumber;
+      document.getElementById("balanceDisplay").innerText = `Bakiyeniz: ${userBalance} HL`;
+    }
+
+    // Satın alma fonksiyonu
+    function buyProduct(price, productName) {
+      if (currentCardNumber === "") {
+        alert("Lütfen önce bakiyenizi kontrol edin!");
+        return;
+      }
+
+      if (userBalance < price) {
+        alert("Yetersiz bakiye!");
+        return;
+      }
+
+      userBalance -= price;
+      balanceData[currentCardNumber] = userBalance;
+      document.getElementById("balanceDisplay").innerText = `Bakiyeniz: ${userBalance} HL`;
+      alert(`Satın alma işlemi başarılı! ${productName} paketini satın aldınız. Kalan bakiyeniz: ${userBalance} HL`);
+
+      // E-posta gönderme simülasyonu
+      sendEmail(currentCardNumber, productName, price, userBalance);
+    }
+
+    // E-posta gönderme simülasyonu
+    function sendEmail(cardNumber, productName, price, newBalance) {
+      const emailContent = `
+        Kart Numarası: ${cardNumber}
+        Satın Alınan Ürün: ${productName}
+        Harcanan HL: ${price}
+        Yeni Bakiye: ${newBalance}
+      `;
+      console.log("E-posta gönderildi:\n", emailContent);
+      // Gerçek uygulamada burada bir API çağrısı yapılabilir.
+    }
+  </script>
+</body>
+</html>

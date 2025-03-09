@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HLK Kulübü - Profil</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Profil</h1>
+    <nav>
+      <a href="index.html">Ana Sayfa</a>
+      <a href="blog.html">Blog</a>
+      <a href="shop.html">Alışveriş</a>
+      <a href="contact.html">İletişim</a>
+      <a href="profile.html">Profil</a>
+      <a href="turnuva.html">Turnuva</a>
+    </nav>
+    <div id="profileContent">
+      <p>Lütfen giriş yapın.</p>
+    </div>
+  </div>
+  <script>
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const profileContent = document.getElementById("profileContent");
+
+    if (currentUser) {
+      profileContent.innerHTML = `
+        <h2>Profil Bilgileri</h2>
+        <p><strong>İsim Soyisim:</strong> ${currentUser.name}</p>
+        <p><strong>E-posta:</strong> ${currentUser.email}</p>
+        <p><strong>Telefon Numarası:</strong> ${currentUser.phone}</p>
+        <p><strong>Doğum Tarihi:</strong> ${currentUser.birthdate}</p>
+        <p><strong>Bakiye:</strong> ${currentUser.balance} HL</p>
+        <button onclick="logout()">Çıkış Yap</button>
+      `;
+    }
+
+    function logout() {
+      localStorage.removeItem("currentUser");
+      alert("Çıkış yapıldı!");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HLK Kulübü - İletişim</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>İletişim</h1>
+    <nav>
+      <a href="index.html">Ana Sayfa</a>
+      <a href="blog.html">Blog</a>
+      <a href="shop.html">Alışveriş</a>
+      <a href="contact.html">İletişim</a>
+      <a href="profile.html">Profil</a>
+    </nav>
+    <div id="contactContent">
+      <p>Lütfen giriş yapın.</p>
+    </div>
+  </div>
+  <script>
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const contactContent = document.getElementById("contactContent");
+
+    if (currentUser) {
+      contactContent.innerHTML = `
+        <h2>Bizimle İletişime Geçin</h2>
+        <form id="contactForm">
+          <input type="text" id="name" placeholder="İsim Soyisim" value="${currentUser.name}" readonly>
+          <input type="email" id="email" placeholder="E-posta" value="${currentUser.email}" readonly>
+          <input type="text" id="subject" placeholder="Konu" required>
+          <textarea id="message" placeholder="Mesajınız" required></textarea>
+          <button type="submit">Gönder</button>
+        </form>
+      `;
+
+      document.getElementById("contactForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        alert("Mesajınız gönderildi!");
+      });
+    }
+  </script>
+</body>
+</html>

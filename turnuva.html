@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HLK Kulübü - Turnuva</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Turnuva</h1>
+    <nav>
+      <a href="index.html">Ana Sayfa</a>
+      <a href="blog.html">Blog</a>
+      <a href="shop.html">Alışveriş</a>
+      <a href="contact.html">İletişim</a>
+      <a href="profile.html">Profil</a>
+      <a href="turnuva.html">Turnuva</a>
+    </nav>
+    <div id="turnuvaContent">
+      <h2>Turnuvaya Katıl</h2>
+      <p>Online kullanıcılarla birlikte 10 kişilik takımlar oluşturun ve turnuvaya katılın!</p>
+      <button onclick="joinTournament()">Turnuvaya Katıl</button>
+      <div id="teamSection" style="display: none;">
+        <h3>Takımınız</h3>
+        <ul id="teamList"></ul>
+        <button onclick="startTournament()">Turnuvayı Başlat</button>
+      </div>
+      <div id="gameSection" style="display: none;">
+        <h3>Brawl Stars Dostluk Maçı</h3>
+        <p>Brawl Stars oyunu açılıyor... Lütfen bekleyin.</p>
+        <iframe id="brawlStarsFrame" src="" width="600" height="400" style="border: none;"></iframe>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Simüle edilmiş online kullanıcılar
+    const onlineUsers = [
+      "Kullanıcı1", "Kullanıcı2", "Kullanıcı3", "Kullanıcı4", "Kullanıcı5",
+      "Kullanıcı6", "Kullanıcı7", "Kullanıcı8", "Kullanıcı9", "Kullanıcı10"
+    ];
+
+    let currentTeam = [];
+
+    // Turnuvaya katılma fonksiyonu
+    function joinTournament() {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (!currentUser) {
+        alert("Lütfen önce giriş yapın!");
+        window.location.href = "login.html";
+        return;
+      }
+
+      // Kullanıcıyı takıma ekle
+      currentTeam = [currentUser.name, ...onlineUsers.slice(0, 9)]; // 10 kişilik takım oluştur
+      document.getElementById("teamSection").style.display = "block";
+
+      // Takım listesini güncelle
+      const teamList = document.getElementById("teamList");
+      teamList.innerHTML = currentTeam.map(user => `<li>${user}</li>`).join("");
+    }
+
+    // Turnuvayı başlatma fonksiyonu
+    function startTournament() {
+      if (currentTeam.length < 10) {
+        alert("Takımınız 10 kişi değil!");
+        return;
+      }
+
+      // Brawl Stars oyununu simüle et
+      document.getElementById("teamSection").style.display = "none";
+      document.getElementById("gameSection").style.display = "block";
+
+      // Brawl Stars oyununu aç (simülasyon)
+      const brawlStarsFrame = document.getElementById("brawlStarsFrame");
+      brawlStarsFrame.src = "https://supercell.com/en/games/brawlstars/"; // Brawl Stars resmi sitesi
+      alert("Brawl Stars oyunu açılıyor. Lütfen oyunda dostluk maçı başlatın.");
+    }
+  </script>
+</body>
+</html>

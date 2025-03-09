@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HLK Kulübü - Kayıt Ol</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Kayıt Ol</h1>
+    <form id="registerForm">
+      <input type="text" id="name" placeholder="İsim Soyisim" required>
+      <input type="email" id="email" placeholder="E-posta" required>
+      <input type="text" id="phone" placeholder="Telefon Numarası" required>
+      <input type="password" id="password" placeholder="Şifre (en az 8 karakter)" minlength="8" required>
+      <input type="date" id="birthdate" required>
+      <button type="submit">Kayıt Ol</button>
+    </form>
+    <p>Zaten hesabınız var mı? <a href="login.html">Giriş Yap</a></p>
+  </div>
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const user = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        password: document.getElementById("password").value,
+        birthdate: document.getElementById("birthdate").value,
+        balance: 1000, // Yeni kullanıcıya varsayılan bakiye
+      };
+
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      localStorage.setItem(user.email, JSON.stringify(user));
+
+      alert("Kayıt başarılı! Giriş yapabilirsiniz.");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>
