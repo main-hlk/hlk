@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HLK Kulübü - Alışveriş</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>HLK Kulübü</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="shop.html">Alışveriş</a></li>
+        <li><a href="contact.html">İletişim</a></li>
+        <li><a href="qa.html">Soru-Cevap</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section>
+    <h2>Alışveriş</h2>
+    <div id="balance">
+      <label for="userId">Kullanıcı Numaranız:</label>
+      <input type="text" id="userId" placeholder="Örnek: 12345">
+      <button onclick="checkBalance()">Bakiyeyi Kontrol Et</button>
+      <p id="balanceResult"></p>
+    </div>
+    <div id="products">
+      <!-- Ürünler burada listelenecek -->
+      <div class="product">
+        <h3>Çaylak (Rookie Brawler) - 100 HL</h3>
+        <p><strong>Açıklama:</strong> Kulübe yeni katılan üyeler.</p>
+        <p><strong>Görev:</strong> Kulübü tanımak ve temel kuralları öğrenmek.</p>
+        <button onclick="buyProduct(100, 'Çaylak (Rookie Brawler)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Aktif Savaşçı (Active Fighter) - 300 HL</h3>
+        <p><strong>Açıklama:</strong> Düzenli olarak etkinliklere katılan ve kulübe katkıda bulunan üyeler.</p>
+        <p><strong>Görev:</strong> Takım oyunlarında yer almak ve kulüp etkinliklerine destek olmak.</p>
+        <button onclick="buyProduct(300, 'Aktif Savaşçı (Active Fighter)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Kıdemli Brawler (Veteran Brawler) - 500 HL</h3>
+        <p><strong>Açıklama:</strong> Uzun süredir kulüpte olan ve önemli başarılar elde eden üyeler.</p>
+        <p><strong>Görev:</strong> Yeni üyelere rehberlik etmek ve takım liderliği yapmak.</p>
+        <button onclick="buyProduct(500, 'Kıdemli Brawler (Veteran Brawler)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Takım Kaptanı (Team Captain) - 800 HL</h3>
+        <p><strong>Açıklama:</strong> Lider yardımcısı konumunda olan ve takım oyunlarında strateji belirleyen üyeler.</p>
+        <p><strong>Görev:</strong> Liderin yokluğunda kulübü yönetmek ve organizasyonları koordine etmek.</p>
+        <button onclick="buyProduct(800, 'Takım Kaptanı (Team Captain)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Efsanevi Lider (Legendary Leader) - 1200 HL</h3>
+        <p><strong>Açıklama:</strong> Kulübün başında olan ve tüm kararları veren kişi.</p>
+        <p><strong>Görev:</strong> Kulübün genel stratejisini belirlemek ve büyük resmi yönetmek.</p>
+        <button onclick="buyProduct(1200, 'Efsanevi Lider (Legendary Leader)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Mitolojik Savaşçı (Mythic Warrior) - 1500 HL</h3>
+        <p><strong>Açıklama:</strong> Kulübe büyük katkılar sağlamış ve artık aktif olmayan üyeler.</p>
+        <p><strong>Görev:</strong> Danışmanlık yapmak ve kulübün geleceği için fikirler sunmak.</p>
+        <button onclick="buyProduct(1500, 'Mitolojik Savaşçı (Mythic Warrior)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Kurucu Brawler (Founder Brawler) - 2000 HL</h3>
+        <p><strong>Açıklama:</strong> Kulübün kuruluşunda yer alan ve temellerini atan üyeler.</p>
+        <p><strong>Görev:</strong> Kulübün vizyonunu korumak ve yeni liderlere rehberlik etmek.</p>
+        <button onclick="buyProduct(2000, 'Kurucu Brawler (Founder Brawler)')">Satın Al</button>
+      </div>
+      <div class="product">
+        <h3>Strateji Ustası (Master Strategist) - 2500 HL</h3>
+        <p><strong>Açıklama:</strong> Kulüp dışından gelen, deneyimli ve stratejik danışmanlık yapan kişiler.</p>
+        <p><strong>Görev:</strong> Takım oyunlarında strateji geliştirmek ve eğitimler vermek.</p>
+        <button onclick="buyProduct(2500, 'Strateji Ustası (Master Strategist)')">Satın Al</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 HLK Kulübü</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
