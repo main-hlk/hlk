@@ -81,12 +81,12 @@ form button:hover {
   margin: 5px 0;
 }
 
-#teamList {
+#onlineUsersList, #teamList, #gameTeamList {
   list-style-type: none;
   padding: 0;
 }
 
-#teamList li {
+#onlineUsersList li, #teamList li, #gameTeamList li {
   padding: 10px;
   border: 1px solid #ccc;
   margin: 5px 0;
@@ -97,6 +97,11 @@ form button:hover {
   text-align: center;
 }
 
-#brawlStarsFrame {
-  margin-top: 20px;
+#brawlStarsLink {
+  color: #ff6600;
+  text-decoration: none;
+}
+
+#brawlStarsLink:hover {
+  text-decoration: underline;
 }
