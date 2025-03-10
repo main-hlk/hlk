@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yarışma</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Yarışma</h1>
+    <div id="yarismaContent">
+      <h2>Yarışmaya Katıl</h2>
+      <form id="yarismaForm">
+        <input type="text" id="participantName" placeholder="İsim" required>
+        <input type="email" id="participantEmail" placeholder="E-posta" required>
+        <button type="submit">Katıl</button>
+      </form>
+      <h3>Katılımcılar</h3>
+      <ul id="participantList"></ul>
+    </div>
+  </div>
+  <script>
+    const participants = [];
+
+    document.getElementById("yarismaForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("participantName").value;
+      const email = document.getElementById("participantEmail").value;
+      participants.push({ name, email });
+      displayParticipants();
+      document.getElementById("yarismaForm").reset();
+    });
+
+    function displayParticipants() {
+      const participantList = document.getElementById("participantList");
+      participantList.innerHTML = participants.map(participant => `
+        <li>${participant.name} - ${participant.email}</li>
+      `).join("");
+    }
+
+    displayParticipants();
+  </script>
+</body>
+</html>
