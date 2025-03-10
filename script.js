@@ -25,18 +25,19 @@ app.post("/leave", (req, res) => {
   res.json({ onlineUsers });
 });
 
-// Online kullanıcıları listele
-app.get("/online-users", (req, res) => {
-  res.json({ onlineUsers });
-});
-
-app.listen(port, () => {
-  console.log(`Server ${port} portunda çalışıyor...`);
-});
 const joinButton = document.getElementById("joinButton");
 
-// Click event'i (masaüstü ve mobil için)
-joinButton.addEventListener("click", joinTournament);
+if (joinButton) {
+  joinButton.addEventListener("click", function () {
+    alert("Butona tıklandı!");
+    joinTournament();
+  });
 
-// Touch event'i (mobil için)
-joinButton.addEventListener("touchend", joinTournament);
+  joinButton.addEventListener("touchend", function (e) {
+    e.preventDefault(); // Mobil tarayıcıların varsayılan davranışını engelle
+    alert("Butona dokunuldu!");
+    joinTournament();
+  });
+} else {
+  console.error("Buton bulunamadı!");
+}
