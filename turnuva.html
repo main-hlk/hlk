@@ -26,14 +26,23 @@
         <ul id="teamList"></ul>
         <button onclick="startTournament()">Turnuvayı Başlat</button>
       </div>
+      <div id="gameSection" style="display: none;">
+        <h3>Brawl Stars Dostluk Savaşı</h3>
+        <p>Brawl Stars oyununu açın ve aşağıdaki takım arkadaşlarınızla dostluk savaşı başlatın:</p>
+        <ul id="gameTeamList"></ul>
+        <p>Brawl Stars'ı açmak için <a href="brawlstars://" id="brawlStarsLink">buraya tıklayın</a>.</p>
+      </div>
     </div>
   </div>
   <script>
     // Simüle edilmiş online kullanıcılar
-    const onlineUsers = [
-      "Kullanıcı1", "Kullanıcı2", "Kullanıcı3", "Kullanıcı4", "Kullanıcı5",
-      "Kullanıcı6", "Kullanıcı7", "Kullanıcı8", "Kullanıcı9", "Kullanıcı10"
-    ];
+    let onlineUsers = [];
+
+    // Kullanıcıları localStorage'dan al
+    function getOnlineUsers() {
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      onlineUsers = users.map(user => user.name);
+    }
 
     let currentTeam = [];
 
@@ -45,6 +54,9 @@
         window.location.href = "login.html";
         return;
       }
+
+      // Online kullanıcıları güncelle
+      getOnlineUsers();
 
       // Kullanıcıyı takıma ekle
       currentTeam = [currentUser.name, ...onlineUsers.slice(0, 9)]; // 10 kişilik takım oluştur
@@ -62,17 +74,22 @@
         return;
       }
 
-      // Brawl Stars oyununu aç
-      const brawlStarsAppURL = "brawlstars://"; // Brawl Stars mobil uygulama deep linki
-      const brawlStarsWebURL = "https://supercell.com/en/games/brawlstars/"; // Brawl Stars web sitesi
+      // Takım listesini göster
+      document.getElementById("teamSection").style.display = "none";
+      document.getElementById("gameSection").style.display = "block";
 
-      // Mobil cihazlarda uygulamayı açmaya çalış
-      window.location.href = brawlStarsAppURL;
+      const gameTeamList = document.getElementById("gameTeamList");
+      gameTeamList.innerHTML = currentTeam.map(user => `<li>${user}</li>`).join("");
 
-      // Eğer uygulama açılmazsa web sitesine yönlendir
-      setTimeout(() => {
-        window.location.href = brawlStarsWebURL;
-      }, 500);
+      // Brawl Stars deep linki
+      const brawlStarsLink = document.getElementById("brawlStarsLink");
+      brawlStarsLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.location.href = "brawlstars://"; // Brawl Stars mobil uygulama deep linki
+        setTimeout(() => {
+          window.location.href = "https://supercell.com/en/games/brawlstars/"; // Web sitesine yedek yönlendirme
+        }, 500);
+      });
     }
   </script>
 </body>
