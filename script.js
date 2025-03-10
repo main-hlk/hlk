@@ -33,3 +33,10 @@ app.get("/online-users", (req, res) => {
 app.listen(port, () => {
   console.log(`Server ${port} portunda çalışıyor...`);
 });
+const joinButton = document.getElementById("joinButton");
+
+// Click event'i (masaüstü ve mobil için)
+joinButton.addEventListener("click", joinTournament);
+
+// Touch event'i (mobil için)
+joinButton.addEventListener("touchend", joinTournament);
