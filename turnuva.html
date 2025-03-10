@@ -20,7 +20,11 @@
     <div id="turnuvaContent">
       <h2>Turnuvaya Katıl</h2>
       <p>Online kullanıcılarla birlikte 10 kişilik takımlar oluşturun ve turnuvaya katılın!</p>
-      <button onclick="joinTournament()">Turnuvaya Katıl</button>
+      <button onclick="joinTournament()" id="joinButton">Turnuvaya Katıl</button>
+      <div id="onlineUsersSection" style="display: none;">
+        <h3>Online Kullanıcılar</h3>
+        <ul id="onlineUsersList"></ul>
+      </div>
       <div id="teamSection" style="display: none;">
         <h3>Takımınız</h3>
         <ul id="teamList"></ul>
@@ -35,16 +39,32 @@
     </div>
   </div>
   <script>
-    // Simüle edilmiş online kullanıcılar
-    let onlineUsers = [];
+    // Online kullanıcıları localStorage'dan al veya boş bir dizi oluştur
+    let onlineUsers = JSON.parse(localStorage.getItem("onlineUsers")) || [];
 
-    // Kullanıcıları localStorage'dan al
-    function getOnlineUsers() {
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-      onlineUsers = users.map(user => user.name);
+    // Kullanıcıyı online listesine ekle
+    function addUserToOnlineList() {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (currentUser && !onlineUsers.includes(currentUser.name)) {
+        onlineUsers.push(currentUser.name);
+        localStorage.setItem("onlineUsers", JSON.stringify(onlineUsers));
+      }
     }
 
-    let currentTeam = [];
+    // Kullanıcıyı online listesinden çıkar
+    function removeUserFromOnlineList() {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (currentUser) {
+        onlineUsers = onlineUsers.filter(user => user !== currentUser.name);
+        localStorage.setItem("onlineUsers", JSON.stringify(onlineUsers));
+      }
+    }
+
+    // Online kullanıcıları göster
+    function showOnlineUsers() {
+      const onlineUsersList = document.getElementById("onlineUsersList");
+      onlineUsersList.innerHTML = onlineUsers.map(user => `<li>${user}</li>`).join("");
+    }
 
     // Turnuvaya katılma fonksiyonu
     function joinTournament() {
@@ -55,11 +75,25 @@
         return;
       }
 
-      // Online kullanıcıları güncelle
-      getOnlineUsers();
+      // Kullanıcıyı online listesine ekle
+      addUserToOnlineList();
 
-      // Kullanıcıyı takıma ekle
-      currentTeam = [currentUser.name, ...onlineUsers.slice(0, 9)]; // 10 kişilik takım oluştur
+      // Online kullanıcıları göster
+      document.getElementById("onlineUsersSection").style.display = "block";
+      document.getElementById("joinButton").style.display = "none";
+      showOnlineUsers();
+
+      // 10 kişilik takım oluştur
+      if (onlineUsers.length >= 10) {
+        createTeam();
+      } else {
+        alert("10 kişi olana kadar bekleyin...");
+      }
+    }
+
+    // Takım oluşturma fonksiyonu
+    function createTeam() {
+      const currentTeam = onlineUsers.slice(0, 10); // İlk 10 kullanıcıyı takıma ekle
       document.getElementById("teamSection").style.display = "block";
 
       // Takım listesini güncelle
@@ -69,10 +103,7 @@
 
     // Turnuvayı başlatma fonksiyonu
     function startTournament() {
-      if (currentTeam.length < 10) {
-        alert("Takımınız 10 kişi değil!");
-        return;
-      }
+      const currentTeam = onlineUsers.slice(0, 10); // İlk 10 kullanıcıyı takıma ekle
 
       // Takım listesini göster
       document.getElementById("teamSection").style.display = "none";
@@ -90,7 +121,25 @@
           window.location.href = "https://supercell.com/en/games/brawlstars/"; // Web sitesine yedek yönlendirme
         }, 500);
       });
+
+      // Online kullanıcı listesini temizle
+      onlineUsers = [];
+      localStorage.setItem("onlineUsers", JSON.stringify(onlineUsers));
     }
+
+    // Sayfa yüklendiğinde online kullanıcıları göster
+    window.onload = function () {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (currentUser) {
+        addUserToOnlineList();
+        showOnlineUsers();
+      }
+    };
+
+    // Sayfadan ayrılırken kullanıcıyı online listesinden çıkar
+    window.onbeforeunload = function () {
+      removeUserFromOnlineList();
+    };
   </script>
 </body>
 </html>
