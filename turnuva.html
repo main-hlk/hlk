@@ -25,49 +25,13 @@
         <h3>Online Kullanıcılar</h3>
         <ul id="onlineUsersList"></ul>
       </div>
-      <div id="teamSection" style="display: none;">
-        <h3>Takımınız</h3>
-        <ul id="teamList"></ul>
-        <button onclick="startTournament()">Turnuvayı Başlat</button>
-      </div>
-      <div id="gameSection" style="display: none;">
-        <h3>Brawl Stars Dostluk Savaşı</h3>
-        <p>Brawl Stars oyununu açın ve aşağıdaki takım arkadaşlarınızla dostluk savaşı başlatın:</p>
-        <ul id="gameTeamList"></ul>
-        <p>Brawl Stars'ı açmak için <a href="brawlstars://" id="brawlStarsLink">buraya tıklayın</a>.</p>
-      </div>
     </div>
   </div>
   <script>
-    // Online kullanıcıları localStorage'dan al veya boş bir dizi oluştur
-    let onlineUsers = JSON.parse(localStorage.getItem("onlineUsers")) || [];
+    const apiUrl = "http://localhost:3000"; // Backend API URL'si
 
     // Kullanıcıyı online listesine ekle
-    function addUserToOnlineList() {
-      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      if (currentUser && !onlineUsers.includes(currentUser.name)) {
-        onlineUsers.push(currentUser.name);
-        localStorage.setItem("onlineUsers", JSON.stringify(onlineUsers));
-      }
-    }
-
-    // Kullanıcıyı online listesinden çıkar
-    function removeUserFromOnlineList() {
-      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      if (currentUser) {
-        onlineUsers = onlineUsers.filter(user => user !== currentUser.name);
-        localStorage.setItem("onlineUsers", JSON.stringify(onlineUsers));
-      }
-    }
-
-    // Online kullanıcıları göster
-    function showOnlineUsers() {
-      const onlineUsersList = document.getElementById("onlineUsersList");
-      onlineUsersList.innerHTML = onlineUsers.map(user => `<li>${user}</li>`).join("");
-    }
-
-    // Turnuvaya katılma fonksiyonu
-    function joinTournament() {
+    async function joinTournament() {
       const currentUser = JSON.parse(localStorage.getItem("currentUser"));
       if (!currentUser) {
         alert("Lütfen önce giriş yapın!");
@@ -75,70 +39,42 @@
         return;
       }
 
-      // Kullanıcıyı online listesine ekle
-      addUserToOnlineList();
+      const response = await fetch(`${apiUrl}/join`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: currentUser.name }),
+      });
+      const data = await response.json();
 
       // Online kullanıcıları göster
       document.getElementById("onlineUsersSection").style.display = "block";
       document.getElementById("joinButton").style.display = "none";
-      showOnlineUsers();
-
-      // 10 kişilik takım oluştur
-      if (onlineUsers.length >= 10) {
-        createTeam();
-      } else {
-        alert("10 kişi olana kadar bekleyin...");
-      }
+      showOnlineUsers(data.onlineUsers);
     }
 
-    // Takım oluşturma fonksiyonu
-    function createTeam() {
-      const currentTeam = onlineUsers.slice(0, 10); // İlk 10 kullanıcıyı takıma ekle
-      document.getElementById("teamSection").style.display = "block";
-
-      // Takım listesini güncelle
-      const teamList = document.getElementById("teamList");
-      teamList.innerHTML = currentTeam.map(user => `<li>${user}</li>`).join("");
+    // Online kullanıcıları göster
+    function showOnlineUsers(users) {
+      const onlineUsersList = document.getElementById("onlineUsersList");
+      onlineUsersList.innerHTML = users.map(user => `<li>${user}</li>`).join("");
     }
 
-    // Turnuvayı başlatma fonksiyonu
-    function startTournament() {
-      const currentTeam = onlineUsers.slice(0, 10); // İlk 10 kullanıcıyı takıma ekle
-
-      // Takım listesini göster
-      document.getElementById("teamSection").style.display = "none";
-      document.getElementById("gameSection").style.display = "block";
-
-      const gameTeamList = document.getElementById("gameTeamList");
-      gameTeamList.innerHTML = currentTeam.map(user => `<li>${user}</li>`).join("");
-
-      // Brawl Stars deep linki
-      const brawlStarsLink = document.getElementById("brawlStarsLink");
-      brawlStarsLink.addEventListener("click", function (e) {
-        e.preventDefault();
-        window.location.href = "brawlstars://"; // Brawl Stars mobil uygulama deep linki
-        setTimeout(() => {
-          window.location.href = "https://supercell.com/en/games/brawlstars/"; // Web sitesine yedek yönlendirme
-        }, 500);
-      });
-
-      // Online kullanıcı listesini temizle
-      onlineUsers = [];
-      localStorage.setItem("onlineUsers", JSON.stringify(onlineUsers));
-    }
-
-    // Sayfa yüklendiğinde online kullanıcıları göster
-    window.onload = function () {
+    // Sayfadan ayrılırken kullanıcıyı online listesinden çıkar
+    window.onbeforeunload = async function () {
       const currentUser = JSON.parse(localStorage.getItem("currentUser"));
       if (currentUser) {
-        addUserToOnlineList();
-        showOnlineUsers();
+        await fetch(`${apiUrl}/leave`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: currentUser.name }),
+        });
       }
     };
 
-    // Sayfadan ayrılırken kullanıcıyı online listesinden çıkar
-    window.onbeforeunload = function () {
-      removeUserFromOnlineList();
+    // Sayfa yüklendiğinde online kullanıcıları al
+    window.onload = async function () {
+      const response = await fetch(`${apiUrl}/online-users`);
+      const data = await response.json();
+      showOnlineUsers(data.onlineUsers);
     };
   </script>
 </body>
