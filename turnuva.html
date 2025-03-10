@@ -26,11 +26,6 @@
         <ul id="teamList"></ul>
         <button onclick="startTournament()">Turnuvayı Başlat</button>
       </div>
-      <div id="gameSection" style="display: none;">
-        <h3>Brawl Stars Dostluk Maçı</h3>
-        <p>Brawl Stars oyunu açılıyor... Lütfen bekleyin.</p>
-        <iframe id="brawlStarsFrame" src="" width="600" height="400" style="border: none;"></iframe>
-      </div>
     </div>
   </div>
   <script>
@@ -67,14 +62,17 @@
         return;
       }
 
-      // Brawl Stars oyununu simüle et
-      document.getElementById("teamSection").style.display = "none";
-      document.getElementById("gameSection").style.display = "block";
+      // Brawl Stars oyununu aç
+      const brawlStarsAppURL = "brawlstars://"; // Brawl Stars mobil uygulama deep linki
+      const brawlStarsWebURL = "https://supercell.com/en/games/brawlstars/"; // Brawl Stars web sitesi
 
-      // Brawl Stars oyununu aç (simülasyon)
-      const brawlStarsFrame = document.getElementById("brawlStarsFrame");
-      brawlStarsFrame.src = "https://supercell.com/en/games/brawlstars/"; // Brawl Stars resmi sitesi
-      alert("Brawl Stars oyunu açılıyor. Lütfen oyunda dostluk maçı başlatın.");
+      // Mobil cihazlarda uygulamayı açmaya çalış
+      window.location.href = brawlStarsAppURL;
+
+      // Eğer uygulama açılmazsa web sitesine yönlendir
+      setTimeout(() => {
+        window.location.href = brawlStarsWebURL;
+      }, 500);
     }
   </script>
 </body>
