@@ -1,3 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #ff6600;
+}
+
+nav {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #ff6600;
+}
+
 .button {
   display: inline-block;
   padding: 10px 20px;
@@ -5,17 +38,70 @@
   color: #fff;
   border-radius: 5px;
   text-decoration: none;
-  cursor: pointer; /* Masaüstü için imleç */
-  -webkit-tap-highlight-color: transparent; /* Mobilde tıklama efektini kaldır */
-  user-select: none; /* Metin seçimini engelle */
 }
 
 .button:hover {
   background-color: #cc5200;
 }
 
-/* Mobil cihazlar için dokunma efektleri */
-.button:active {
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form button:hover {
   background-color: #cc5200;
-  transform: scale(0.95); /* Butona basıldığında küçülme efekti */
+}
+
+.product, .blog-post {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.product h3, .blog-post h3 {
+  margin: 0;
+}
+
+.product p, .blog-post p {
+  margin: 5px 0;
+}
+
+#onlineUsersList, #teamList, #gameTeamList {
+  list-style-type: none;
+  padding: 0;
+}
+
+#onlineUsersList li, #teamList li, #gameTeamList li {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+#gameSection {
+  text-align: center;
+}
+
+#brawlStarsLink {
+  color: #ff6600;
+  text-decoration: none;
+}
+
+#brawlStarsLink:hover {
+  text-decoration: underline;
 }
