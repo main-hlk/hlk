@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kredi Çek</title>
+  <style>
+    body { font-family: sans-serif; background: #0f172a; color: white; padding: 20px; }
+    input, button { padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
+    nav a { color: #38bdf8; margin-right: 10px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="shop.html">Mağaza</a>
+    <a href="sepet.html">Sepet</a>
+    <a href="kredi.html">Kredi</a>
+    <a href="kartlar.html">Kartlar</a>
+  </nav>
+
+  <h1>Kredi Çek (max 7500 HL)</h1>
+  <input type="text" id="kartNo" placeholder="Kart Numarası">
+  <input type="number" id="miktar" placeholder="Kredi Miktarı">
+  <button onclick="krediCek()">Kredi Al</button>
+  <div id="sonuc"></div>
+
+  <script>
+    const limit = 7500;
+    const krediTarihiKey = "krediTarihleri";
+
+    function krediCek() {
+      let no = document.getElementById("kartNo").value.trim();
+      let miktar = parseInt(document.getElementById("miktar").value.trim());
+
+      if (miktar > limit) return alert("Maksimum 7500 HL kredi alınabilir.");
+
+      let kartlar = JSON.parse(localStorage.getItem("kartlar") || "[]");
+      let krediTarihleri = JSON.parse(localStorage.getItem(krediTarihiKey) || "{}");
+
+      let kart = kartlar.find(k => k.no === no);
+      if (!kart) return alert("Kart bulunamadı!");
+
+      kart.bakiye += miktar;
+      krediTarihleri[no] = Date.now();
+      localStorage.setItem("kartlar", JSON.stringify(kartlar));
+      localStorage.setItem(krediTarihiKey, JSON.stringify(krediTarihleri));
+
+      document.getElementById("sonuc").innerText = "✅ Kredi başarıyla yüklendi.";
+
+      // 7 gün sonra sıfırlama kontrolü (demo amaçlı 1 saniyeye indirildi)
+      setTimeout(() => {
+        let kayitTarihi = krediTarihleri[no];
+        if (Date.now() - kayitTarihi >= 7 * 24 * 60 * 60 * 1000) {
+          let k = kartlar.find(k => k.no === no);
+          if (k) {
+            k.bakiye = 0;
+            localStorage.setItem("kartlar", JSON.stringify(kartlar));
+            alert("⏰ Kredi süresi doldu, bakiye sıfırlandı.");
+          }
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

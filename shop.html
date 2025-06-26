@@ -1,0 +1,8 @@
+<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><title>Mağaza</title><style>body{font-family:sans-serif;background:#0f172a;color:white;padding:20px;}.urun{background:#1e293b;padding:15px;margin:10px 0;border-radius:8px;}button{background-color:#22c55e;border:none;padding:10px 15px;color:white;cursor:pointer;border-radius:5px;}nav a{color:#38bdf8;margin-right:10px;text-decoration:none;}</style></head><body>
+<nav><a href="index.html">Ana Sayfa</a><a href="shop.html">Mağaza</a><a href="sepet.html">Sepet</a><a href="kredi.html">Kredi</a><a href="kartlar.html">Kartlar</a></nav>
+<h1>HLK Mağazası</h1>
+<div class="urun"><h3>🎮 HLgame (1 Tur)</h3><p>Fiyat: 200 HL</p><button onclick="sepeteEkle('HLgame (1 Tur)', 200)">Sepete Ekle</button></div>
+<div class="urun"><h3>🌟 Tezgah Stars Ön Bilet</h3><p>Fiyat: 1000 HL</p><button onclick="sepeteEkle('Tezgah Stars Ön Bilet', 1000)">Sepete Ekle</button></div>
+<script>
+function sepeteEkle(urun,fiyat){let sepet=JSON.parse(localStorage.getItem("sepet")||"[]");sepet.push({urun,fiyat});localStorage.setItem("sepet",JSON.stringify(sepet));alert(urun+" sepete eklendi!");}
+</script></body></html>

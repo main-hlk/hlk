@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Sepet</title>
+  <style>
+    body { font-family: sans-serif; background: #0f172a; color: white; padding: 20px; }
+    .urun { background: #1e293b; padding: 10px; margin: 10px 0; border-radius: 6px; }
+    input, button { padding: 8px; margin: 5px 0; border-radius: 5px; border: none; }
+    nav a { color: #38bdf8; margin-right: 10px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="shop.html">Mağaza</a>
+    <a href="sepet.html">Sepet</a>
+    <a href="kredi.html">Kredi</a>
+    <a href="kartlar.html">Kartlar</a>
+  </nav>
+
+  <h1>Sepet</h1>
+  <div id="sepetAlani"></div>
+
+  <h3>Kart Bilgileri</h3>
+  <input type="text" id="kartNo" placeholder="Kart Numarası">
+  <input type="text" id="tutar" placeholder="Ödeme Tutarı">
+  <button onclick="odemeYap()">Ödeme Yap</button>
+  <div id="sonuc"></div>
+
+  <script>
+    const kartlar = JSON.parse(localStorage.getItem("kartlar") || "[]");
+    const sepet = JSON.parse(localStorage.getItem("sepet") || "[]");
+
+    document.getElementById("sepetAlani").innerHTML =
+      sepet.map(s => `<div class='urun'>${s.urun} - ${s.fiyat} HL</div>`).join("");
+
+    function odemeYap() {
+      const no = document.getElementById("kartNo").value.trim();
+      const tutar = parseInt(document.getElementById("tutar").value.trim());
+      let k = kartlar.find(k => k.no === no);
+      if (k) {
+        if (k.bakiye >= tutar) {
+          k.bakiye -= tutar;
+          localStorage.setItem("kartlar", JSON.stringify(kartlar));
+          localStorage.setItem("sepet", "[]");
+          document.getElementById("sonuc").innerText = "✅ Ödeme başarılı. Ürün bilgisi e-postaya gönderildi (simülasyon)";
+        } else {
+          document.getElementById("sonuc").innerText = "❌ Yetersiz bakiye.";
+        }
+      } else {
+        document.getElementById("sonuc").innerText = "❌ Kart bulunamadı.";
+      }
+    }
+  </script>
+</body>
+</html>
