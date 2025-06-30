@@ -9,6 +9,15 @@
 <body>
   <header><h1>Hesabım</h1></header>
 
+  <nav class="navbar">
+    <button onclick="location.href='index.html'">Ana Sayfa</button>
+    <button onclick="location.href='kartekle.html'">Kart Ekle</button>
+    <button onclick="location.href='anasayfa.html'">Hesabım</button>
+    <button onclick="location.href='havale.html'">Para Gönder</button>
+    <button onclick="location.href='shop.html'">Alışveriş</button>
+    <button onclick="location.href='admin.html'">Admin Paneli</button>
+  </nav>
+
   <main>
     <select id="kartSec" onchange="goster()">
       <option value="">Kart seçin</option>
@@ -19,9 +28,6 @@
       <p>IBAN: <span id="iban"></span></p>
       <p>Bakiye: <span id="bakiye"></span> HL</p>
     </div>
-
-    <button onclick="location.href='anasayfa.html'">Yenile</button>
-    <button onclick="location.href='index.html'">Ana Sayfa</button>
   </main>
 
   <script>
@@ -43,7 +49,6 @@
         document.getElementById('bakiye').textContent = '';
         return;
       }
-
       const kart = kartlar.find(k => k.kartNo === secilenKartNo);
       if (kart) {
         document.getElementById('kartNo').textContent = kart.kartNo;
