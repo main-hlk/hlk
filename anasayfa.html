@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HLB - Hesabım</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header><h1>Hesabım</h1></header>
+
+  <main>
+    <select id="kartSec" onchange="goster()">
+      <option value="">Kart seçin</option>
+    </select>
+
+    <div id="bilgi" style="margin-top:20px;">
+      <p>Kart Numarası: <span id="kartNo"></span></p>
+      <p>IBAN: <span id="iban"></span></p>
+      <p>Bakiye: <span id="bakiye"></span> HL</p>
+    </div>
+
+    <button onclick="location.href='anasayfa.html'">Yenile</button>
+    <button onclick="location.href='index.html'">Ana Sayfa</button>
+  </main>
+
+  <script>
+    const kartlar = JSON.parse(localStorage.getItem('kartlar') || '[]');
+    const kartSec = document.getElementById('kartSec');
+
+    kartlar.forEach(kart => {
+      const opt = document.createElement('option');
+      opt.value = kart.kartNo;
+      opt.textContent = kart.kartNo.slice(0,4) + ' **** **** ' + kart.kartNo.slice(-4);
+      kartSec.appendChild(opt);
+    });
+
+    function goster() {
+      const secilenKartNo = kartSec.value;
+      if (!secilenKartNo) {
+        document.getElementById('kartNo').textContent = '';
+        document.getElementById('iban').textContent = '';
+        document.getElementById('bakiye').textContent = '';
+        return;
+      }
+
+      const kart = kartlar.find(k => k.kartNo === secilenKartNo);
+      if (kart) {
+        document.getElementById('kartNo').textContent = kart.kartNo;
+        document.getElementById('iban').textContent = kart.iban;
+        document.getElementById('bakiye').textContent = kart.bakiye;
+      }
+    }
+  </script>
+</body>
+</html>
