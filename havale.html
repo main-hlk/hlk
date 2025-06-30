@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HLB - Para Gönder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header><h1>Para Gönder</h1></header>
+
+  <main>
+    <form id="havaleForm">
+      <label for="gonderenKart">Gönderen Kart:</label>
+      <select id="gonderenKart" required></select>
+
+      <label for="aliciKart">Alıcı Kart Numarası (16 hane):</label>
+      <input type="text" id="aliciKart" maxlength="16" required pattern="\\d{16}" />
+
+      <label for="tutar">Gönderilecek Tutar (HL):</label>
+      <input type="number" id="tutar" min="1" required />
+
+      <button type="submit">Gönder</button>
+    </form>
+    <p id="mesaj"></p>
+    <button onclick="location.href='index.html'">Ana Sayfa</button>
+  </main>
+
+  <script>
+    let kartlar = JSON.parse(localStorage.getItem('kartlar') || '[]');
+    const gonderenKart = document.getElementById('gonderenKart');
+    const mesaj = document.getElementById('mesaj');
+
+    kartlar.forEach(kart => {
+      const opt = document.createElement('option');
+      opt.value = kart.kartNo;
+      opt.textContent = kart.kartNo.slice(0,4) + ' **** **** ' + kart.kartNo.slice(-4);
+      gonderenKart.appendChild(opt);
+    });
+
+    document.getElementById('havaleForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      mesaj.textContent = '';
+
+      const gonderenNo = gonderenKart.value;
+      const aliciNo = document.getElementById('aliciKart').value.trim();
+      const tutar = parseFloat(document.getElementById('tutar').value);
+
+      if (!/^\\d{16}$/.test(aliciNo)) {
+        mesaj.textContent = 'Alıcı kart numarası 16 hane olmalıdır!';
+        return;
+      }
+      if (tutar <= 0) {
+        mesaj.textContent = 'Lütfen geçerli bir tutar giriniz!';
+        return;
+      }
+
+      let gonderen = kartlar.find(k => k.kartNo === gonderenNo);
+      if (!gonderen) {
+        mesaj.textContent = 'Gönderen kart bulunamadı!';
+        return;
+      }
+      if (gonderen.bakiye < tutar) {
+        mesaj.textContent = 'Yetersiz bakiye!';
+        return;
+      }
+
+      // Alıcı kartı bul veya yeni oluştur
+      let alici = kartlar.find(k => k.kartNo === aliciNo);
+      if (!alici) {
+        alici = { kartNo: aliciNo, cvc: '000', bakiye: 0, iban: 'HLB' + Math.floor(Math.random() * 1000000000) };
+        kartlar.push(alici);
+      }
+
+      // Bakiyeleri güncelle
+      gonderen.bakiye -= tutar;
+      alici.bakiye += tutar;
+
+      localStorage.setItem('kartlar', JSON.stringify(kartlar));
+
+      mesaj.textContent = `Başarıyla ${tutar} HL gönderildi. Gönderenin yeni bakiyesi: ${gonderen.bakiye} HL.`;
+
+      // İşlem geçmişine ekleyebiliriz (isteğe bağlı)
+    });
+  </script>
+</body>
+</html>
