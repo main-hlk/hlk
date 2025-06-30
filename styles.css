@@ -1,111 +1,127 @@
 /* style.css */
 
-/* Genel reset ve temel stiller */
+/* Reset ve temel stil */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0; padding: 0;
-  background: #f5f8fa;
-  color: #333;
+  background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
-  background: #0057a4;
-  color: white;
+  background-color: #0D47A1;
   padding: 1rem;
+  color: white;
   text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-/* Navbar stilleri */
+/* Navbar */
 nav.navbar {
   display: flex;
-  justify-content: space-around;
-  background-color: #0073e6;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  justify-content: center;
+  background-color: #1565C0;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 nav.navbar button {
-  flex: 1;
-  padding: 1rem 0;
   background: none;
   border: none;
-  color: white;
+  padding: 1rem 1.5rem;
+  color: #e3f2fd;
+  font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background-color 0.3s ease;
+  user-select: none;
 }
 
 nav.navbar button:hover,
 nav.navbar button:focus {
-  background-color: #005bb5;
+  background-color: #0B3D91;
+  outline: none;
+  color: #fff;
+}
+
+/* Main içerik */
+main {
+  flex-grow: 1;
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #ffffffcc;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Form elemanları */
+form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #0D47A1;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select,
+form button {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1.2rem;
+  border: 2px solid #1565C0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form select:focus {
+  border-color: #0D47A1;
   outline: none;
 }
 
-/* Main içerik alanı */
-main {
-  padding: 1rem;
-  max-width: 600px;
-  margin: auto;
-}
-
-/* Form ve inputlar */
-form label {
-  display: block;
-  margin: 0.5rem 0 0.2rem;
-}
-
-form input, form select, form button {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
 form button {
-  background-color: #0073e6;
-  color: white;
+  background-color: #0D47A1;
+  color: #fff;
+  font-weight: 700;
   border: none;
-  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
 }
 
-form button:hover {
-  background-color: #005bb5;
+form button:hover,
+form button:focus {
+  background-color: #0B3D91;
+  outline: none;
 }
 
 /* Sepet listesi */
 #sepetListesi {
   list-style: none;
-  padding: 0;
+  padding-left: 0;
 }
 
 #sepetListesi li {
-  background: white;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 5px;
+  background-color: #e3f2fd;
+  margin-bottom: 0.8rem;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-/* Mesaj alanları */
-#mesaj {
-  color: green;
-  font-weight: bold;
-  margin-top: 1rem;
-  min-height: 1.5rem;
-}
-
-/* Responsive (Mobil) */
-@media (max-width: 480px) {
-  nav.navbar button {
-    font-size: 0.9rem;
-    padding: 0.7rem 0;
-  }
-}
+  align
