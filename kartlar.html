@@ -9,24 +9,32 @@
 <body>
   <header><h1>Kart Ekle</h1></header>
 
+  <nav class="navbar">
+    <button onclick="location.href='index.html'">Ana Sayfa</button>
+    <button onclick="location.href='kartekle.html'">Kart Ekle</button>
+    <button onclick="location.href='anasayfa.html'">Hesabım</button>
+    <button onclick="location.href='havale.html'">Para Gönder</button>
+    <button onclick="location.href='shop.html'">Alışveriş</button>
+    <button onclick="location.href='admin.html'">Admin Paneli</button>
+  </nav>
+
   <main>
     <form id="kartEkleForm">
       <label for="kartNo">Kart Numarası (16 hane):</label>
-      <input type="text" id="kartNo" name="kartNo" maxlength="16" required pattern="\\d{16}" />
+      <input type="text" id="kartNo" maxlength="16" required pattern="\\d{16}" />
 
       <label for="cvc">CVC (3 hane):</label>
-      <input type="text" id="cvc" name="cvc" maxlength="3" required pattern="\\d{3}" />
+      <input type="text" id="cvc" maxlength="3" required pattern="\\d{3}" />
 
       <button type="submit">Kartı Ekle</button>
     </form>
-
     <p id="mesaj"></p>
   </main>
 
   <script>
     const kartlar = JSON.parse(localStorage.getItem('kartlar') || '[]');
 
-    document.getElementById('kartEkleForm').addEventListener('submit', function (e) {
+    document.getElementById('kartEkleForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
       const kartNo = document.getElementById('kartNo').value.trim();
@@ -41,18 +49,15 @@
         return;
       }
 
-      // Aynı kart var mı kontrol et
       if (kartlar.some(k => k.kartNo === kartNo)) {
         document.getElementById('mesaj').textContent = 'Bu kart zaten kayıtlı!';
         return;
       }
 
-      kartlar.push({ kartNo, cvc, bakiye: 0, iban: 'HLB' + Math.floor(Math.random() * 1000000000) });
+      kartlar.push({ kartNo, cvc, bakiye: 0, iban: 'HLB' + Math.floor(Math.random()*1000000000) });
       localStorage.setItem('kartlar', JSON.stringify(kartlar));
 
       document.getElementById('mesaj').textContent = 'Kart başarıyla eklendi!';
-
-      // Formu temizle
       e.target.reset();
     });
   </script>
