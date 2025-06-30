@@ -1,8 +1,60 @@
 <!DOCTYPE html>
-<html lang="tr"><head><meta charset="UTF-8"><title>Kart Ekle</title><style>body{font-family:sans-serif;background:#0f172a;color:white;padding:20px;}input,button{display:block;margin:10px 0;padding:10px;border:none;border-radius:6px;font-size:16px;}button{background-color:#38bdf8;color:white;cursor:pointer;}#sonuc{margin-top:10px;}nav a{color:#38bdf8;margin-right:10px;text-decoration:none;}</style></head>
-<body><nav><a href="index.html">Ana Sayfa</a><a href="shop.html">Mağaza</a><a href="sepet.html">Sepet</a><a href="kredi.html">Kredi</a><a href="kartlar.html">Kartlar</a></nav>
-<h1>Kart Ekle</h1><input type="text" id="kartNo" placeholder="Kart Numarası"><input type="text" id="cvc" placeholder="CVC"><input type="text" id="skt" placeholder="Son Kullanma Tarihi (AA/YYYY)"><button onclick="kartEkle()">Kartı Ekle</button><div id="sonuc"></div>
-<script>
-const sistemKartlari=[{no:"3429235624825239",cvc:"027",skt:"01/2029"},{no:"9473476235972635",cvc:"020",skt:"01/2029"},{no:"6312991834818872",cvc:"101",skt:"02/2030"},{no:"7683251992813712",cvc:"144",skt:"06/2028"},{no:"5548123498125541",cvc:"323",skt:"12/2027"},{no:"9876543210987654",cvc:"999",skt:"08/2029"}];
-function kartEkle(){const no=document.getElementById("kartNo").value.trim();const cvc=document.getElementById("cvc").value.trim();const skt=document.getElementById("skt").value.trim();const eslesen=sistemKartlari.find(k=>k.no===no&&k.cvc===cvc&&k.skt===skt);if(eslesen){let kullaniciKartlari=JSON.parse(localStorage.getItem("kartlar")||"[]");if(!kullaniciKartlari.find(k=>k.no===no)){kullaniciKartlari.push({no,bakiye:0});localStorage.setItem("kartlar",JSON.stringify(kullaniciKartlari));document.getElementById("sonuc").innerText="✅ Kart başarıyla eklendi.";}else{document.getElementById("sonuc").innerText="ℹ️ Bu kart zaten eklenmiş."}}else{document.getElementById("sonuc").innerText="❌ Kart bilgileri hatalı."}}
-</script></body></html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HLB - Kart Ekle</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header><h1>Kart Ekle</h1></header>
+
+  <main>
+    <form id="kartEkleForm">
+      <label for="kartNo">Kart Numarası (16 hane):</label>
+      <input type="text" id="kartNo" name="kartNo" maxlength="16" required pattern="\\d{16}" />
+
+      <label for="cvc">CVC (3 hane):</label>
+      <input type="text" id="cvc" name="cvc" maxlength="3" required pattern="\\d{3}" />
+
+      <button type="submit">Kartı Ekle</button>
+    </form>
+
+    <p id="mesaj"></p>
+  </main>
+
+  <script>
+    const kartlar = JSON.parse(localStorage.getItem('kartlar') || '[]');
+
+    document.getElementById('kartEkleForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const kartNo = document.getElementById('kartNo').value.trim();
+      const cvc = document.getElementById('cvc').value.trim();
+
+      if (!/^\\d{16}$/.test(kartNo)) {
+        alert('Kart numarası 16 hane olmalıdır!');
+        return;
+      }
+      if (!/^\\d{3}$/.test(cvc)) {
+        alert('CVC 3 hane olmalıdır!');
+        return;
+      }
+
+      // Aynı kart var mı kontrol et
+      if (kartlar.some(k => k.kartNo === kartNo)) {
+        document.getElementById('mesaj').textContent = 'Bu kart zaten kayıtlı!';
+        return;
+      }
+
+      kartlar.push({ kartNo, cvc, bakiye: 0, iban: 'HLB' + Math.floor(Math.random() * 1000000000) });
+      localStorage.setItem('kartlar', JSON.stringify(kartlar));
+
+      document.getElementById('mesaj').textContent = 'Kart başarıyla eklendi!';
+
+      // Formu temizle
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
