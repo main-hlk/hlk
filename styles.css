@@ -1,0 +1,111 @@
+/* style.css */
+
+/* Genel reset ve temel stiller */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0; padding: 0;
+  background: #f5f8fa;
+  color: #333;
+}
+
+header {
+  background: #0057a4;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Navbar stilleri */
+nav.navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #0073e6;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav.navbar button {
+  flex: 1;
+  padding: 1rem 0;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+nav.navbar button:hover,
+nav.navbar button:focus {
+  background-color: #005bb5;
+  outline: none;
+}
+
+/* Main içerik alanı */
+main {
+  padding: 1rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+/* Form ve inputlar */
+form label {
+  display: block;
+  margin: 0.5rem 0 0.2rem;
+}
+
+form input, form select, form button {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  background-color: #0073e6;
+  color: white;
+  border: none;
+  font-weight: bold;
+}
+
+form button:hover {
+  background-color: #005bb5;
+}
+
+/* Sepet listesi */
+#sepetListesi {
+  list-style: none;
+  padding: 0;
+}
+
+#sepetListesi li {
+  background: white;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Mesaj alanları */
+#mesaj {
+  color: green;
+  font-weight: bold;
+  margin-top: 1rem;
+  min-height: 1.5rem;
+}
+
+/* Responsive (Mobil) */
+@media (max-width: 480px) {
+  nav.navbar button {
+    font-size: 0.9rem;
+    padding: 0.7rem 0;
+  }
+}
